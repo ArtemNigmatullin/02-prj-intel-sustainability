@@ -1,1 +1,181 @@
 /* Add your CSS here */
+/* Intel Aesthetic */
+:root{
+  --intel-blue:#0068B5;           /* Intel primary */
+  --intel-blue-700:#004A86;
+  --intel-blue-50:#E6F1FA;
+  --ink:#0B0C0C;
+  --muted:#5a6a7a;
+  --card-bg:#ffffff;
+  --shadow: 0 8px 20px rgba(0,0,0,.12);
+  --radius: 16px;
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color:var(--ink);
+  background:#f7f9fc;
+  line-height:1.5;
+}
+
+/* ---------- HERO ---------- */
+.hero{
+  /* Intel-branded gradient background */
+  background: radial-gradient(1200px 600px at 50% -10%, #1d8ddd 0%, var(--intel-blue) 45%, var(--intel-blue-700) 100%);
+  color:#fff;
+  text-align:center;             /* center all text & logo in header */
+  padding: clamp(48px, 8vw, 96px) 16px;
+}
+.hero-inner{max-width:1100px;margin:0 auto}
+.hero-logo{
+  width:min(320px, 40vw);        /* resize svg logo with CSS */
+  height:auto;
+  display:block;
+  margin:0 auto 16px;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,.25));
+}
+.hero-title{
+  font-size: clamp(28px, 5vw, 56px);
+  margin: 8px 0 10px;
+  letter-spacing:.2px;
+  font-weight:800;
+}
+.hero-subtitle{
+  font-size: clamp(14px, 2.2vw, 18px);
+  margin:0 auto;
+  max-width: 760px;
+  opacity:.95;
+}
+
+/* ---------- TIMELINE WRAPPER ---------- */
+.timeline-wrap{
+  display:flex;
+  justify-content:center;   /* center the whole section */
+  padding: 32px 0 8px;
+}
+
+/* Horizontal scroll timeline on large screens */
+.timeline{
+  display:flex;
+  gap: 20px;
+  padding: 24px;
+  max-width: 1200px;
+  width:100%;
+  overflow-x:auto;                 /* horizontal scroll */
+  scroll-snap-type: x mandatory;   /* scroll snap */
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Hide default scrollbar but keep scrolling */
+.timeline::-webkit-scrollbar{height:10px}
+.timeline::-webkit-scrollbar-track{background:transparent}
+.timeline::-webkit-scrollbar-thumb{
+  background: linear-gradient(90deg, var(--intel-blue), var(--intel-blue-700));
+  border-radius:999px;
+}
+
+/* ---------- CARDS ---------- */
+.card{
+  scroll-snap-align:start;
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  min-width: 290px;               /* width for horizontal */
+  max-width: 340px;
+  padding: 18px 18px 16px;
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;            /* sections centered overall, but text left */
+  gap: 10px;
+  transition: transform .25s ease, box-shadow .25s ease;
+  border: 1px solid rgba(0,0,0,.05);
+}
+.card:hover, .card:focus{
+  transform: translateY(-4px) scale(1.01); /* subtle transform on hover/focus */
+  box-shadow: 0 16px 28px rgba(0,0,0,.18);
+  outline: none;
+}
+.card h2{
+  margin: 0;
+  color: var(--intel-blue);
+  font-size: 20px;
+  letter-spacing:.2px;
+  text-align:left;                /* keep text left-aligned in sections */
+}
+.card h3{
+  margin: 2px 0 8px;
+  font-size: 18px;
+  font-weight:700;
+  text-align:left;
+  color:#102a43;
+}
+
+/* The “icon” = section image that triggers the paragraph reveal on hover */
+.icon{
+  width:100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 12px;
+  display:block;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,.06);
+  transition: transform .3s ease, filter .3s ease;
+  cursor: pointer;
+}
+.card:hover .icon, .card:focus .icon{
+  transform: translateY(-2px);
+  filter: saturate(1.05) contrast(1.02);
+}
+
+/* Paragraph is visually tucked until the image/icon is hovered or the card is focused */
+.desc{
+  margin: 6px 2px 0;
+  color: var(--muted);
+  font-size: 14.5px;
+  line-height: 1.45;
+  text-align:left;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height .35s ease, opacity .25s ease;
+}
+
+/* Reveal on icon hover (and keyboard focus on card) */
+.icon:hover + .desc,
+.card:focus .desc,
+.card:hover .desc{
+  max-height: 260px;
+  opacity: 1;
+}
+
+/* ---------- HINT ---------- */
+.hint{
+  text-align:center;              /* center hint */
+  color:#4c5a67;
+  font-size: 14px;
+  margin: 6px 12px 28px;
+}
+
+/* ---------- RESPONSIVE (stack vertically) ---------- */
+@media (max-width: 860px){
+  .timeline{
+    /* stack cards vertically on small screens */
+    flex-direction: column;
+    overflow-x: visible;          /* no horizontal scroll */
+    scroll-snap-type: none;
+    padding: 12px 16px 8px;
+  }
+  .card{
+    min-width: auto;
+    max-width: 680px;
+    margin: 0 auto;               /* center the section/cards in small screens */
+  }
+  .icon{ height: 200px; }
+}
+
+/* Slightly tighter on very small screens */
+@media (max-width: 420px){
+  .hero-title{ font-size: clamp(26px, 9vw, 34px); }
+  .icon{ height: 160px; }
+}
